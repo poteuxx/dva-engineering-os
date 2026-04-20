@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dva.99 Engineering System</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body{
+margin:0;
+font-family:Segoe UI;
+background:#0b0f19;
+color:#e5e7eb;
+display:flex;
+height:100vh;
+}
+
+/* SIDEBAR */
+.sidebar{
+width:260px;
+background:#0f172a;
+padding:20px;
+border-right:1px solid rgba(255,255,255,0.08);
+}
+
+.nav{
+padding:10px;
+cursor:pointer;
+border-radius:8px;
+color:#9ca3af;
+}
+.nav:hover{background:rgba(255,255,255,0.05);color:white;}
+.active{background:rgba(99,102,241,0.25);color:white;}
+
+/* MAIN */
+.main{
+flex:1;
+padding:20px;
+overflow:auto;
+}
+
+/* PAGES */
+.page{display:none;}
+.page.active{display:block;}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:20px;
+}
+
+.card{
+background:rgba(255,255,255,0.04);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:12px;
+padding:15px;
+}
+
+/* OS WINDOW STYLE */
+.window{
+position:absolute;
+width:400px;
+height:260px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.1);
+border-radius:10px;
+display:none;
+backdrop-filter:blur(12px);
+}
+
+.bar{
+background:rgba(99,102,241,0.3);
+padding:6px;
+display:flex;
+justify-content:space-between;
+cursor:default;
+}
+
+/* TERMINAL */
+#terminalInput{
+width:100%;
+background:transparent;
+border:none;
+color:white;
+outline:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+<h3>Dva.99 SYSTEM</h3>
+
+<div class="nav active" onclick="show('dash',this)">📊 Analytics</div>
+<div class="nav" onclick="show('projects',this)">📁 Projects DB</div>
+<div class="nav" onclick="show('skills',this)">💻 Skills Map</div>
+<div class="nav" onclick="show('os',this)">🖥️ OS Mode</div>
+</div>
+
+<div class="main">
+
+<!-- DASHBOARD -->
+<div id="dash" class="page active">
+<div class="grid">
+
+<div class="card">
+<h3>Domain Distribution</h3>
+<canvas id="c1"></canvas>
+</div>
+
+<div class="card">
+<h3>Complexity Evolution</h3>
+<canvas id="c2"></canvas>
+</div>
+
+<div class="card">
+<h3>Engineering Maturity Index</h3>
+<canvas id="c3"></canvas>
+</div>
+
+</div>
+</div>
+
+<!-- PROJECTS DB -->
+<div id="projects" class="page">
+<div class="card">
+<h3>Project Intelligence Database</h3>
+<div id="db"></div>
+</div>
+</div>
+
+<!-- SKILLS -->
+<div id="skills" class="page">
+<div class="card">
+<h3>Skill Heatmap</h3>
+
+C# ██████████ 100%<br>
+Automation █████████ 92%<br>
+System API ████████ 85%<br>
+Networking ███████ 75%<br>
+AI/OCR ████████ 80%
+
+</div>
+</div>
+
+<!-- OS MODE -->
+<div id="os" class="page">
+
+<div class="card" style="height:500px;position:relative;">
+
+<div class="window" id="win">
+<div class="bar">
+<span id="wt">Window</span>
+<span onclick="closeW()" style="cursor:pointer;">✖</span>
+</div>
+<div style="padding:10px;font-size:12px;">
+Fake OS subsystem running inside analytics engine.
+</div>
+</div>
+
+<div style="position:absolute;bottom:0;left:0;right:0;height:40px;
+background:#0f172a;display:flex;align-items:center;padding:0 10px;">
+🪟 Start | 📁 Files | 💻 Terminal
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* DATA ENGINE */
+const projects=[
+{name:"Task Manager Clone",cat:"System",c:8.5},
+{name:"OCR Bot",cat:"Automation",c:9.2},
+{name:"Crosshair Tool",cat:"UI",c:6.5},
+{name:"Remote Viewer",cat:"Networking",c:8.8},
+{name:"Media Tool",cat:"Media",c:7.2}
+];
+
+/* NAV */
+function show(id,el){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+
+document.querySelectorAll(".nav").forEach(n=>n.classList.remove("active"));
+el.classList.add("active");
+}
+
+/* CHARTS */
+new Chart(c1,{
+type:"doughnut",
+data:{labels:["System","Automation","Networking","Media","UI"],
+datasets:[{data:[30,25,20,15,10]}]}
+});
+
+new Chart(c2,{
+type:"line",
+data:{labels:["P1","P2","P3","P4","P5"],
+datasets:[{data:[20,40,65,85,100]}]}
+});
+
+new Chart(c3,{
+type:"bar",
+data:{labels:["Phase1","2","3","4","5"],
+datasets:[{data:[20,45,70,90,100]}]}
+});
+
+/* DB RENDER */
+document.getElementById("db").innerHTML=
+projects.map(p=>
+`<div>📌 ${p.name} — ${p.cat} — Complexity ${p.c}</div>`
+).join("");
+
+/* OS */
+function openW(t){
+document.getElementById("win").style.display="block";
+document.getElementById("wt").innerText=t;
+}
+function closeW(){
+document.getElementById("win").style.display="none";
+}
+
+</script>
+
+</body>
+</html>
