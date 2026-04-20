@@ -62,14 +62,15 @@ padding:15px;
 /* WINDOW SYSTEM */
 .window{
 position:absolute;
-width:400px;
-height:260px;
-background:rgba(255,255,255,0.05);
+width:420px;
+height:300px;
+background:rgba(255,255,255,0.06);
 border:1px solid rgba(255,255,255,0.1);
-border-radius:10px;
+border-radius:12px;
 display:none;
-backdrop-filter:blur(12px);
+backdrop-filter:blur(14px);
 z-index:50;
+overflow:hidden;
 }
 
 .bar{
@@ -77,12 +78,11 @@ background:rgba(99,102,241,0.3);
 padding:6px;
 display:flex;
 justify-content:space-between;
-cursor:default;
 }
 
-/* DESKTOP ICONS */
+/* ICONS */
 .icon{
-width:80px;
+width:90px;
 text-align:center;
 cursor:pointer;
 padding:10px;
@@ -91,74 +91,50 @@ display:inline-block;
 color:#cbd5e1;
 transition:0.2s;
 }
+.icon:hover{background:rgba(255,255,255,0.05);transform:scale(1.05);}
 
-.icon:hover{
-background:rgba(255,255,255,0.05);
-transform:scale(1.05);
-}
-
-/* ========================= */
-/* WINDOWS 11 START SYSTEM */
-/* ========================= */
-
+/* TASKBAR */
 #taskbar{
 position:absolute;
 bottom:0;
 left:0;
 right:0;
-height:46px;
+height:48px;
 background:rgba(15,23,42,0.95);
 display:flex;
 align-items:center;
 padding:0 10px;
-gap:12px;
+gap:10px;
 border-top:1px solid rgba(255,255,255,0.08);
 z-index:100;
 }
 
-/* TASKBAR BUTTONS (NEW FUNCTIONAL STYLE) */
 .taskbtn{
 padding:6px 10px;
 border-radius:8px;
 cursor:pointer;
-color:#cbd5e1;
-transition:0.2s;
 background:rgba(255,255,255,0.03);
 font-size:12px;
 }
+.taskbtn:hover{background:rgba(56,189,248,0.2);transform:scale(1.05);}
 
-.taskbtn:hover{
-background:rgba(56,189,248,0.2);
-transform:scale(1.05);
-}
-
-/* START BUTTON */
+/* START */
 #startBtn{
-width:40px;
-height:40px;
+width:40px;height:40px;
 border-radius:10px;
 display:flex;
 align-items:center;
 justify-content:center;
 cursor:pointer;
-transition:0.2s;
 background:rgba(255,255,255,0.06);
 }
-
-#startBtn:hover{
-background:rgba(56,189,248,0.25);
-transform:scale(1.05);
-}
-
-/* START MENU */
 #startMenu{
 position:absolute;
 bottom:60px;
 left:10px;
-width:280px;
-background:rgba(20,25,40,0.75);
+width:300px;
+background:rgba(20,25,40,0.85);
 backdrop-filter:blur(20px);
-border:1px solid rgba(255,255,255,0.1);
 border-radius:16px;
 padding:10px;
 display:none;
@@ -169,12 +145,42 @@ z-index:200;
 padding:10px;
 border-radius:10px;
 cursor:pointer;
-color:#cbd5e1;
-transition:0.2s;
+}
+.start-item:hover{background:rgba(255,255,255,0.06);}
+
+/* FILE EXPLORER STYLE */
+.folder{
+display:flex;
+gap:10px;
+align-items:center;
+padding:8px;
+border-radius:8px;
+cursor:pointer;
+}
+.folder:hover{background:rgba(255,255,255,0.06);}
+
+/* PROGRESS BARS MONITOR */
+.barwrap{
+background:#111827;
+border-radius:10px;
+height:10px;
+overflow:hidden;
+margin:8px 0;
+}
+.barfill{
+height:10px;
+background:linear-gradient(90deg,#38bdf8,#6366f1);
+animation:load 2s infinite alternate;
+}
+@keyframes load{
+from{filter:brightness(0.8);}
+to{filter:brightness(1.4);}
 }
 
-.start-item:hover{
-background:rgba(255,255,255,0.06);
+.osdesk{
+height:85vh;
+position:relative;
+overflow:hidden;
 }
 </style>
 </head>
@@ -185,14 +191,14 @@ background:rgba(255,255,255,0.06);
 <h3>Dva.99 SYSTEM</h3>
 
 <div class="nav active" onclick="show('dash',this)">📊 Analytics</div>
-<div class="nav" onclick="show('projects',this)">📁 Projects DB</div>
+<div class="nav" onclick="show('projects',this)">📁 Files DB</div>
 <div class="nav" onclick="show('skills',this)">💻 Skills Map</div>
 <div class="nav" onclick="show('os',this)">🖥️ OS Mode</div>
 </div>
 
 <div class="main">
 
-<!-- DASHBOARD -->
+<!-- ANALYTICS (UNCHANGED) -->
 <div id="dash" class="page active">
 <div class="grid">
 <div class="card"><h3>Domain Distribution</h3><canvas id="c1"></canvas></div>
@@ -201,10 +207,15 @@ background:rgba(255,255,255,0.06);
 </div>
 </div>
 
-<!-- PROJECTS -->
+<!-- FILES -->
 <div id="projects" class="page">
 <div class="card">
-<h3>Project Intelligence Database</h3>
+<h3>File Explorer</h3>
+
+<div class="folder" onclick="openW('Files')">📁 Users</div>
+<div class="folder" onclick="openW('Files')">📁 System</div>
+<div class="folder" onclick="openW('Files')">📁 Projects</div>
+
 <div id="db"></div>
 </div>
 </div>
@@ -224,13 +235,14 @@ AI/OCR ████████ 80%
 <!-- OS MODE -->
 <div id="os" class="page">
 
-<div class="card" style="height:520px;position:relative;overflow:hidden;">
+<div class="card osdesk">
 
-<!-- DESKTOP ICONS -->
-<div style="padding:10px;">
-<div class="icon" onclick="openW('Projects')">📁<br>Projects</div>
-<div class="icon" onclick="openW('Analytics')">📊<br>Analytics</div>
+<!-- ICONS -->
+<div>
+<div class="icon" onclick="openW('Files')">📁<br>Files</div>
+<div class="icon" onclick="openW('Monitor')">📊<br>Monitor</div>
 <div class="icon" onclick="openW('Terminal')">💻<br>Terminal</div>
+<div class="icon" onclick="openW('Settings')">⚙️<br>Settings</div>
 </div>
 
 <!-- WINDOW -->
@@ -239,38 +251,33 @@ AI/OCR ████████ 80%
 <span id="wt">Window</span>
 <span onclick="closeW()" style="cursor:pointer;">✖</span>
 </div>
-<div style="padding:10px;font-size:12px;" id="wcontent">
-Fake OS subsystem running inside analytics engine.
-</div>
+<div style="padding:10px;font-size:12px;" id="wcontent"></div>
 </div>
 
-<!-- START MENU -->
+<!-- START -->
 <div id="startMenu">
-<div class="start-item" onclick="openW('Projects')">📁 Projects</div>
-<div class="start-item" onclick="openW('Analytics')">📊 Analytics</div>
+<div class="start-item" onclick="openW('Files')">📁 Files</div>
+<div class="start-item" onclick="openW('Monitor')">📊 Monitor</div>
 <div class="start-item" onclick="openW('Terminal')">💻 Terminal</div>
+<div class="start-item" onclick="openW('Settings')">⚙️ Settings</div>
 </div>
 
-<!-- TASKBAR (NOW FULLY FUNCTIONAL) -->
+<!-- TASKBAR -->
 <div id="taskbar">
-
 <div id="startBtn" onclick="toggleStart()">🪟</div>
 
-<div class="taskbtn" onclick="openW('Projects')">📁 Files</div>
+<div class="taskbtn" onclick="openW('Files')">📁 Files</div>
 <div class="taskbtn" onclick="openW('Terminal')">💻 Terminal</div>
-<div class="taskbtn" onclick="openW('Analytics')">📊 Monitor</div>
-<div class="taskbtn" onclick="show('skills',document.querySelectorAll('.nav')[2])">⚙️ Settings</div>
-
+<div class="taskbtn" onclick="openW('Monitor')">📊 Monitor</div>
+<div class="taskbtn" onclick="openW('Settings')">⚙️ Settings</div>
 </div>
 
 </div>
-</div>
-
 </div>
 
 <script>
 
-/* DATA */
+/* ANALYTICS DATA (UNCHANGED) */
 const projects=[
 {name:"Task Manager Clone",cat:"System",c:8.5},
 {name:"OCR Bot",cat:"Automation",c:9.2},
@@ -287,39 +294,72 @@ document.querySelectorAll(".nav").forEach(n=>n.classList.remove("active"));
 if(el) el.classList.add("active");
 }
 
-/* CHARTS */
+/* CHARTS (UNCHANGED ANALYTICS) */
 new Chart(c1,{type:"doughnut",data:{labels:["System","Automation","Networking","Media","UI"],datasets:[{data:[30,25,20,15,10]}]}});
 new Chart(c2,{type:"line",data:{labels:["P1","P2","P3","P4","P5"],datasets:[{data:[20,40,65,85,100]}]}});
 new Chart(c3,{type:"bar",data:{labels:["Phase1","2","3","4","5"],datasets:[{data:[20,45,70,90,100]}]}});
 
 /* DB */
 document.getElementById("db").innerHTML=
-projects.map(p=>`<div>📌 ${p.name} — ${p.cat} — Complexity ${p.c}</div>`).join("");
+projects.map(p=>`<div>📌 ${p.name} — ${p.cat} — ${p.c}</div>`).join("");
 
 /* WINDOW SYSTEM */
 function openW(t){
 document.getElementById("win").style.display="block";
 document.getElementById("wt").innerText=t;
 
-let content="";
-if(t==="Projects") content="📁 Projects System loaded...";
-if(t==="Analytics") content="📊 Analytics Engine active...";
-if(t==="Terminal") content="💻 Terminal ready...";
+let html="";
 
-document.getElementById("wcontent").innerHTML=content;
+/* FILES */
+if(t==="Files"){
+html=`
+📁 USER SYSTEM<br>
+<div class='folder'>🗂 Drive C:</div>
+<div class='folder'>🗂 Drive D:</div>
+<div class='folder'>🗂 Projects</div>`;
+}
+
+/* MONITOR */
+if(t==="Monitor"){
+html=`
+📊 LIVE ANALYTICS<br>
+CPU <div class='barwrap'><div class='barfill' style='width:70%'></div></div>
+RAM <div class='barwrap'><div class='barfill' style='width:55%'></div></div>
+GPU <div class='barwrap'><div class='barfill' style='width:80%'></div></div>`;
+}
+
+/* TERMINAL */
+if(t==="Terminal"){
+html=`
+💻 SYSTEM DISKS<br>
+🖴 Local Disk (C:)<br>
+🖴 Data (D:)<br>
+🖴 Backup (E:)<br>`;
+}
+
+/* SETTINGS */
+if(t==="Settings"){
+html=`
+⚙️ SETTINGS PANEL<br>
+- Performance Mode<br>
+- UI Theme<br>
+- System Modules<br>
+- Analytics Engine`;
+}
+
+document.getElementById("wcontent").innerHTML=html;
 }
 
 function closeW(){
 document.getElementById("win").style.display="none";
 }
 
-/* START MENU */
+/* START */
 function toggleStart(){
 let m=document.getElementById("startMenu");
 m.style.display = (m.style.display==="block") ? "none" : "block";
 }
 
-/* CLOSE MENU OUTSIDE */
 document.addEventListener("click",function(e){
 if(!e.target.closest("#startBtn") && !e.target.closest("#startMenu")){
 document.getElementById("startMenu").style.display="none";
