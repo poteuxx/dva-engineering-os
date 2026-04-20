@@ -62,13 +62,14 @@ padding:15px;
 /* OS WINDOW STYLE */
 .window{
 position:absolute;
-width:400px;
-height:260px;
-background:rgba(255,255,255,0.05);
+width:420px;
+height:280px;
+background:rgba(255,255,255,0.06);
 border:1px solid rgba(255,255,255,0.1);
 border-radius:10px;
 display:none;
 backdrop-filter:blur(12px);
+overflow:hidden;
 }
 
 .bar{
@@ -87,6 +88,48 @@ border:none;
 color:white;
 outline:none;
 }
+
+/* ===== NEW OS MODE UI ===== */
+.icon{
+width:80px;
+text-align:center;
+cursor:pointer;
+padding:10px;
+border-radius:10px;
+display:inline-block;
+color:#cbd5e1;
+transition:0.2s;
+}
+
+.icon:hover{
+background:rgba(255,255,255,0.05);
+transform:scale(1.05);
+}
+
+#taskbar{
+position:absolute;
+bottom:0;
+left:0;
+right:0;
+height:42px;
+background:#0f172a;
+border-top:1px solid rgba(255,255,255,0.08);
+display:flex;
+align-items:center;
+padding:0 10px;
+gap:12px;
+}
+
+.taskbtn{
+cursor:pointer;
+padding:5px 10px;
+border-radius:6px;
+}
+
+.taskbtn:hover{
+background:rgba(255,255,255,0.05);
+}
+
 </style>
 </head>
 
@@ -147,24 +190,35 @@ AI/OCR ████████ 80%
 </div>
 </div>
 
-<!-- OS MODE -->
+<!-- OS MODE (UPGRADED) -->
 <div id="os" class="page">
 
-<div class="card" style="height:500px;position:relative;">
+<div class="card" style="height:520px; position:relative; overflow:hidden;">
 
+<!-- ICONS -->
+<div style="padding:10px;">
+<div class="icon" onclick="openApp('Projects')">📁<br>Projects</div>
+<div class="icon" onclick="openApp('Analytics')">📊<br>Analytics</div>
+<div class="icon" onclick="openApp('Terminal')">💻<br>Terminal</div>
+</div>
+
+<!-- FLOATING WINDOW -->
 <div class="window" id="win">
 <div class="bar">
 <span id="wt">Window</span>
 <span onclick="closeW()" style="cursor:pointer;">✖</span>
 </div>
-<div style="padding:10px;font-size:12px;">
-Fake OS subsystem running inside analytics engine.
+<div style="padding:10px;font-size:12px;" id="wcontent">
+Loading...
 </div>
 </div>
 
-<div style="position:absolute;bottom:0;left:0;right:0;height:40px;
-background:#0f172a;display:flex;align-items:center;padding:0 10px;">
-🪟 Start | 📁 Files | 💻 Terminal
+<!-- TASKBAR -->
+<div id="taskbar">
+<div class="taskbtn">🪟 Start</div>
+<div class="taskbtn" onclick="openApp('Projects')">📁</div>
+<div class="taskbtn" onclick="openApp('Analytics')">📊</div>
+<div class="taskbtn" onclick="openApp('Terminal')">💻</div>
 </div>
 
 </div>
@@ -212,17 +266,35 @@ data:{labels:["Phase1","2","3","4","5"],
 datasets:[{data:[20,45,70,90,100]}]}
 });
 
-/* DB RENDER */
+/* DB */
 document.getElementById("db").innerHTML=
 projects.map(p=>
 `<div>📌 ${p.name} — ${p.cat} — Complexity ${p.c}</div>`
 ).join("");
 
-/* OS */
-function openW(t){
+/* ===== OS ENGINE UPGRADE ===== */
+
+function openApp(app){
 document.getElementById("win").style.display="block";
-document.getElementById("wt").innerText=t;
+document.getElementById("wt").innerText=app;
+
+let content="";
+
+if(app==="Projects"){
+content="📁 Projects System<br>- Task Manager Clone<br>- OCR Bot<br>- Remote Viewer<br>- Media Tools";
 }
+
+if(app==="Analytics"){
+content="📊 System Analytics Live<br>Engineering Index: 92%<br>Complexity: HIGH<br>Status: STABLE";
+}
+
+if(app==="Terminal"){
+content="💻 Dva Terminal<br>commands: help, status, clear";
+}
+
+document.getElementById("wcontent").innerHTML=content;
+}
+
 function closeW(){
 document.getElementById("win").style.display="none";
 }
