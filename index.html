@@ -59,11 +59,11 @@ border-radius:12px;
 padding:15px;
 }
 
-/* WINDOW SYSTEM */
+/* WINDOW */
 .window{
 position:absolute;
 width:420px;
-height:300px;
+height:320px;
 background:rgba(255,255,255,0.06);
 border:1px solid rgba(255,255,255,0.1);
 border-radius:12px;
@@ -81,7 +81,7 @@ justify-content:space-between;
 cursor:default;
 }
 
-/* DESKTOP ICONS */
+/* ICONS */
 .icon{
 width:80px;
 text-align:center;
@@ -92,11 +92,7 @@ display:inline-block;
 color:#cbd5e1;
 transition:0.2s;
 }
-
-.icon:hover{
-background:rgba(255,255,255,0.05);
-transform:scale(1.05);
-}
+.icon:hover{background:rgba(255,255,255,0.05);transform:scale(1.05);}
 
 /* TASKBAR */
 #taskbar{
@@ -141,7 +137,7 @@ position:absolute;
 bottom:60px;
 left:10px;
 width:300px;
-background:rgba(20,25,40,0.8);
+background:rgba(20,25,40,0.85);
 backdrop-filter:blur(20px);
 border:1px solid rgba(255,255,255,0.1);
 border-radius:16px;
@@ -157,16 +153,7 @@ cursor:pointer;
 }
 .start-item:hover{background:rgba(255,255,255,0.06);}
 
-/* OS CONTENT BLOCKS */
-.folder{
-padding:8px;
-margin:5px 0;
-background:rgba(255,255,255,0.04);
-border-radius:8px;
-cursor:pointer;
-}
-.folder:hover{background:rgba(255,255,255,0.08);}
-
+/* PROGRESS BARS */
 .progress{
 height:10px;
 background:rgba(255,255,255,0.08);
@@ -177,12 +164,19 @@ margin:6px 0;
 .progress div{
 height:100%;
 background:linear-gradient(90deg,#38bdf8,#6366f1);
-width:70%;
-animation:load 1.2s ease;
+animation:load 1s ease;
 }
 @keyframes load{
 from{width:0%;}
 }
+.folder{
+padding:8px;
+margin:5px 0;
+background:rgba(255,255,255,0.04);
+border-radius:8px;
+cursor:pointer;
+}
+.folder:hover{background:rgba(255,255,255,0.08);}
 </style>
 </head>
 
@@ -209,10 +203,7 @@ from{width:0%;}
 
 <!-- PROJECTS -->
 <div id="projects" class="page">
-<div class="card">
-<h3>Project Intelligence Database</h3>
-<div id="db"></div>
-</div>
+<div class="card"><h3>Project Intelligence Database</h3><div id="db"></div></div>
 </div>
 
 <!-- SKILLS -->
@@ -227,7 +218,7 @@ System API ████████ 85%
 <!-- OS MODE -->
 <div id="os" class="page">
 
-<div class="card" style="height:580px;position:relative;overflow:hidden;">
+<div class="card" style="height:650px;position:relative;overflow:hidden;">
 
 <!-- ICONS -->
 <div style="padding:10px;">
@@ -290,7 +281,7 @@ if(el) el.classList.add("active");
 document.getElementById("db").innerHTML=
 projects.map(p=>`<div>📌 ${p.name}</div>`).join("");
 
-/* WINDOW ENGINE */
+/* WINDOW ENGINE FINAL */
 function openW(t){
 document.getElementById("win").style.display="block";
 document.getElementById("wt").innerText=t;
@@ -300,45 +291,43 @@ let c="";
 /* FILES */
 if(t==="Files"){
 c=`
-📁 User Files<br>
+📁 USER FILES<br>
 <div class='folder'>📂 Documents</div>
 <div class='folder'>📂 Builds</div>
 <div class='folder'>📂 Projects</div>
-<div class='folder'>📂 Bots</div>
+<div class='folder'>📂 Users</div>
 `;
 }
 
 /* MONITOR */
 if(t==="Monitor"){
 c=`
-📊 Live Analytics<br>
-CPU
-<div class='progress'><div style='width:75%'></div></div>
-RAM
-<div class='progress'><div style='width:60%'></div></div>
-GPU
-<div class='progress'><div style='width:85%'></div></div>
+📊 ANALYTICS<br>
+CPU<div class='progress'><div style='width:80%'></div></div>
+RAM<div class='progress'><div style='width:60%'></div></div>
+GPU<div class='progress'><div style='width:90%'></div></div>
+AI<div class='progress'><div style='width:75%'></div></div>
 `;
 }
 
 /* TERMINAL */
 if(t==="Terminal"){
 c=`
-💻 Disk Explorer<br>
-<div class='folder'>🖴 C:\\ System Drive</div>
-<div class='folder'>🖴 D:\\ Data Drive</div>
-<div class='folder'>🖴 E:\\ Backup Drive</div>
+💻 DISK SYSTEM<br>
+<div class='folder'>🖴 C:\\ System</div>
+<div class='folder'>🖴 D:\\ Data</div>
+<div class='folder'>🖴 E:\\ Backup</div>
 `;
 }
 
 /* SETTINGS */
 if(t==="Settings"){
 c=`
-⚙️ OS Settings<br>
+⚙️ SETTINGS PANEL<br>
 <div class='folder'>Performance Module</div>
 <div class='folder'>UI Scaling</div>
 <div class='folder'>Network Config</div>
-<div class='folder'>System Theme</div>
+<div class='folder'>Developer Mode</div>
 `;
 }
 
@@ -349,7 +338,6 @@ function closeW(){
 document.getElementById("win").style.display="none";
 }
 
-/* START */
 function toggleStart(){
 let m=document.getElementById("startMenu");
 m.style.display = m.style.display==="block"?"none":"block";
