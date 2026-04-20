@@ -63,7 +63,7 @@ padding:15px;
 .window{
 position:absolute;
 width:420px;
-height:320px;
+height:360px;
 background:rgba(255,255,255,0.06);
 border:1px solid rgba(255,255,255,0.1);
 border-radius:12px;
@@ -78,7 +78,6 @@ background:rgba(99,102,241,0.3);
 padding:6px;
 display:flex;
 justify-content:space-between;
-cursor:default;
 }
 
 /* ICONS */
@@ -114,10 +113,8 @@ z-index:100;
 padding:6px 10px;
 border-radius:8px;
 cursor:pointer;
-color:#cbd5e1;
-transition:0.2s;
-background:rgba(255,255,255,0.03);
 font-size:12px;
+background:rgba(255,255,255,0.03);
 }
 .taskbtn:hover{background:rgba(56,189,248,0.2);transform:scale(1.05);}
 
@@ -136,7 +133,7 @@ background:rgba(255,255,255,0.06);
 position:absolute;
 bottom:60px;
 left:10px;
-width:300px;
+width:280px;
 background:rgba(20,25,40,0.85);
 backdrop-filter:blur(20px);
 border:1px solid rgba(255,255,255,0.1);
@@ -153,6 +150,16 @@ cursor:pointer;
 }
 .start-item:hover{background:rgba(255,255,255,0.06);}
 
+/* FILE SYSTEM */
+.folder{
+padding:8px;
+margin:5px 0;
+background:rgba(255,255,255,0.04);
+border-radius:8px;
+cursor:pointer;
+}
+.folder:hover{background:rgba(255,255,255,0.1);}
+
 /* PROGRESS BARS */
 .progress{
 height:10px;
@@ -164,19 +171,7 @@ margin:6px 0;
 .progress div{
 height:100%;
 background:linear-gradient(90deg,#38bdf8,#6366f1);
-animation:load 1s ease;
 }
-@keyframes load{
-from{width:0%;}
-}
-.folder{
-padding:8px;
-margin:5px 0;
-background:rgba(255,255,255,0.04);
-border-radius:8px;
-cursor:pointer;
-}
-.folder:hover{background:rgba(255,255,255,0.08);}
 </style>
 </head>
 
@@ -192,18 +187,18 @@ cursor:pointer;
 
 <div class="main">
 
-<!-- DASHBOARD -->
+<!-- ANALYTICS -->
 <div id="dash" class="page active">
 <div class="grid">
 <div class="card"><h3>Domain Distribution</h3><canvas id="c1"></canvas></div>
 <div class="card"><h3>Complexity Evolution</h3><canvas id="c2"></canvas></div>
-<div class="card"><h3>Engineering Maturity Index</h3><canvas id="c3"></canvas></div>
+<div class="card"><h3>Engineering Maturity</h3><canvas id="c3"></canvas></div>
 </div>
 </div>
 
 <!-- PROJECTS -->
 <div id="projects" class="page">
-<div class="card"><h3>Project Intelligence Database</h3><div id="db"></div></div>
+<div class="card"><h3>Project DB</h3><div id="db"></div></div>
 </div>
 
 <!-- SKILLS -->
@@ -218,7 +213,7 @@ System API ████████ 85%
 <!-- OS MODE -->
 <div id="os" class="page">
 
-<div class="card" style="height:650px;position:relative;overflow:hidden;">
+<div class="card" style="height:680px;position:relative;overflow:hidden;">
 
 <!-- ICONS -->
 <div style="padding:10px;">
@@ -266,7 +261,8 @@ System API ████████ 85%
 const projects=[
 {name:"Task Manager Clone",cat:"System",c:8.5},
 {name:"OCR Bot",cat:"Automation",c:9.2},
-{name:"Crosshair Tool",cat:"UI",c:6.5}
+{name:"Crosshair Tool",cat:"UI",c:6.5},
+{name:"Remote Viewer",cat:"Networking",c:8.8}
 ];
 
 /* NAV */
@@ -277,11 +273,16 @@ document.querySelectorAll(".nav").forEach(n=>n.classList.remove("active"));
 if(el) el.classList.add("active");
 }
 
+/* CHARTS */
+new Chart(c1,{type:"doughnut",data:{labels:["System","Automation","Networking","UI"],datasets:[{data:[30,25,25,20]}]}});
+new Chart(c2,{type:"line",data:{labels:["P1","P2","P3","P4"],datasets:[{data:[20,40,70,100]}]}});
+new Chart(c3,{type:"bar",data:{labels:["1","2","3","4"],datasets:[{data:[20,50,80,100]}]}});
+
 /* DB */
 document.getElementById("db").innerHTML=
 projects.map(p=>`<div>📌 ${p.name}</div>`).join("");
 
-/* WINDOW ENGINE FINAL */
+/* WINDOW SYSTEM */
 function openW(t){
 document.getElementById("win").style.display="block";
 document.getElementById("wt").innerText=t;
@@ -291,22 +292,22 @@ let c="";
 /* FILES */
 if(t==="Files"){
 c=`
-📁 USER FILES<br>
-<div class='folder'>📂 Documents</div>
-<div class='folder'>📂 Builds</div>
-<div class='folder'>📂 Projects</div>
-<div class='folder'>📂 Users</div>
+📁 FILE SYSTEM<br>
+<div class="folder">📂 Documents</div>
+<div class="folder">📂 Projects</div>
+<div class="folder">📂 Builds</div>
+<div class="folder">📂 Users</div>
 `;
 }
 
 /* MONITOR */
 if(t==="Monitor"){
 c=`
-📊 ANALYTICS<br>
-CPU<div class='progress'><div style='width:80%'></div></div>
-RAM<div class='progress'><div style='width:60%'></div></div>
-GPU<div class='progress'><div style='width:90%'></div></div>
-AI<div class='progress'><div style='width:75%'></div></div>
+📊 MONITOR<br>
+CPU<div class="progress"><div style="width:80%"></div></div>
+RAM<div class="progress"><div style="width:60%"></div></div>
+GPU<div class="progress"><div style="width:90%"></div></div>
+AI<div class="progress"><div style="width:75%"></div></div>
 `;
 }
 
@@ -314,20 +315,20 @@ AI<div class='progress'><div style='width:75%'></div></div>
 if(t==="Terminal"){
 c=`
 💻 DISK SYSTEM<br>
-<div class='folder'>🖴 C:\\ System</div>
-<div class='folder'>🖴 D:\\ Data</div>
-<div class='folder'>🖴 E:\\ Backup</div>
+<div class="folder">C:\\ System</div>
+<div class="folder">D:\\ Data</div>
+<div class="folder">E:\\ Backup</div>
 `;
 }
 
 /* SETTINGS */
 if(t==="Settings"){
 c=`
-⚙️ SETTINGS PANEL<br>
-<div class='folder'>Performance Module</div>
-<div class='folder'>UI Scaling</div>
-<div class='folder'>Network Config</div>
-<div class='folder'>Developer Mode</div>
+⚙️ SETTINGS<br>
+<div class="folder">Performance</div>
+<div class="folder">UI Scale</div>
+<div class="folder">Network</div>
+<div class="folder">Developer Mode</div>
 `;
 }
 
