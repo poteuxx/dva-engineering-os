@@ -59,18 +59,17 @@ border-radius:12px;
 padding:15px;
 }
 
-/* WINDOW */
+/* WINDOW SYSTEM */
 .window{
 position:absolute;
-width:420px;
-height:360px;
-background:rgba(255,255,255,0.06);
+width:400px;
+height:260px;
+background:rgba(255,255,255,0.05);
 border:1px solid rgba(255,255,255,0.1);
-border-radius:12px;
+border-radius:10px;
 display:none;
-backdrop-filter:blur(14px);
+backdrop-filter:blur(12px);
 z-index:50;
-overflow:auto;
 }
 
 .bar{
@@ -78,9 +77,10 @@ background:rgba(99,102,241,0.3);
 padding:6px;
 display:flex;
 justify-content:space-between;
+cursor:default;
 }
 
-/* ICONS */
+/* DESKTOP ICONS */
 .icon{
 width:80px;
 text-align:center;
@@ -91,9 +91,16 @@ display:inline-block;
 color:#cbd5e1;
 transition:0.2s;
 }
-.icon:hover{background:rgba(255,255,255,0.05);transform:scale(1.05);}
 
-/* TASKBAR */
+.icon:hover{
+background:rgba(255,255,255,0.05);
+transform:scale(1.05);
+}
+
+/* ========================= */
+/* WINDOWS 11 START SYSTEM */
+/* ========================= */
+
 #taskbar{
 position:absolute;
 bottom:0;
@@ -109,32 +116,47 @@ border-top:1px solid rgba(255,255,255,0.08);
 z-index:100;
 }
 
+/* TASKBAR BUTTONS (NEW FUNCTIONAL STYLE) */
 .taskbtn{
 padding:6px 10px;
 border-radius:8px;
 cursor:pointer;
-font-size:12px;
+color:#cbd5e1;
+transition:0.2s;
 background:rgba(255,255,255,0.03);
+font-size:12px;
 }
-.taskbtn:hover{background:rgba(56,189,248,0.2);transform:scale(1.05);}
 
-/* START */
+.taskbtn:hover{
+background:rgba(56,189,248,0.2);
+transform:scale(1.05);
+}
+
+/* START BUTTON */
 #startBtn{
-width:40px;height:40px;
+width:40px;
+height:40px;
 border-radius:10px;
 display:flex;
 align-items:center;
 justify-content:center;
 cursor:pointer;
+transition:0.2s;
 background:rgba(255,255,255,0.06);
 }
 
+#startBtn:hover{
+background:rgba(56,189,248,0.25);
+transform:scale(1.05);
+}
+
+/* START MENU */
 #startMenu{
 position:absolute;
 bottom:60px;
 left:10px;
 width:280px;
-background:rgba(20,25,40,0.85);
+background:rgba(20,25,40,0.75);
 backdrop-filter:blur(20px);
 border:1px solid rgba(255,255,255,0.1);
 border-radius:16px;
@@ -147,30 +169,12 @@ z-index:200;
 padding:10px;
 border-radius:10px;
 cursor:pointer;
+color:#cbd5e1;
+transition:0.2s;
 }
-.start-item:hover{background:rgba(255,255,255,0.06);}
 
-/* FILE SYSTEM */
-.folder{
-padding:8px;
-margin:5px 0;
-background:rgba(255,255,255,0.04);
-border-radius:8px;
-cursor:pointer;
-}
-.folder:hover{background:rgba(255,255,255,0.1);}
-
-/* PROGRESS BARS */
-.progress{
-height:10px;
-background:rgba(255,255,255,0.08);
-border-radius:10px;
-overflow:hidden;
-margin:6px 0;
-}
-.progress div{
-height:100%;
-background:linear-gradient(90deg,#38bdf8,#6366f1);
+.start-item:hover{
+background:rgba(255,255,255,0.06);
 }
 </style>
 </head>
@@ -179,6 +183,7 @@ background:linear-gradient(90deg,#38bdf8,#6366f1);
 
 <div class="sidebar">
 <h3>Dva.99 SYSTEM</h3>
+
 <div class="nav active" onclick="show('dash',this)">📊 Analytics</div>
 <div class="nav" onclick="show('projects',this)">📁 Projects DB</div>
 <div class="nav" onclick="show('skills',this)">💻 Skills Map</div>
@@ -187,67 +192,75 @@ background:linear-gradient(90deg,#38bdf8,#6366f1);
 
 <div class="main">
 
-<!-- ANALYTICS -->
+<!-- DASHBOARD -->
 <div id="dash" class="page active">
 <div class="grid">
 <div class="card"><h3>Domain Distribution</h3><canvas id="c1"></canvas></div>
 <div class="card"><h3>Complexity Evolution</h3><canvas id="c2"></canvas></div>
-<div class="card"><h3>Engineering Maturity</h3><canvas id="c3"></canvas></div>
+<div class="card"><h3>Engineering Maturity Index</h3><canvas id="c3"></canvas></div>
 </div>
 </div>
 
 <!-- PROJECTS -->
 <div id="projects" class="page">
-<div class="card"><h3>Project DB</h3><div id="db"></div></div>
+<div class="card">
+<h3>Project Intelligence Database</h3>
+<div id="db"></div>
+</div>
 </div>
 
 <!-- SKILLS -->
 <div id="skills" class="page">
 <div class="card">
+<h3>Skill Heatmap</h3>
 C# ██████████ 100%<br>
 Automation █████████ 92%<br>
-System API ████████ 85%
+System API ████████ 85%<br>
+Networking ███████ 75%<br>
+AI/OCR ████████ 80%
 </div>
 </div>
 
 <!-- OS MODE -->
 <div id="os" class="page">
 
-<div class="card" style="height:680px;position:relative;overflow:hidden;">
+<div class="card" style="height:520px;position:relative;overflow:hidden;">
 
-<!-- ICONS -->
+<!-- DESKTOP ICONS -->
 <div style="padding:10px;">
-<div class="icon" onclick="openW('Files')">📁<br>Files</div>
-<div class="icon" onclick="openW('Monitor')">📊<br>Monitor</div>
+<div class="icon" onclick="openW('Projects')">📁<br>Projects</div>
+<div class="icon" onclick="openW('Analytics')">📊<br>Analytics</div>
 <div class="icon" onclick="openW('Terminal')">💻<br>Terminal</div>
-<div class="icon" onclick="openW('Settings')">⚙️<br>Settings</div>
 </div>
 
 <!-- WINDOW -->
 <div class="window" id="win">
 <div class="bar">
 <span id="wt">Window</span>
-<span onclick="closeW()">✖</span>
+<span onclick="closeW()" style="cursor:pointer;">✖</span>
 </div>
-<div id="wcontent" style="padding:10px;font-size:12px;"></div>
+<div style="padding:10px;font-size:12px;" id="wcontent">
+Fake OS subsystem running inside analytics engine.
+</div>
 </div>
 
-<!-- START -->
+<!-- START MENU -->
 <div id="startMenu">
-<div class="start-item" onclick="openW('Files')">📁 Files</div>
-<div class="start-item" onclick="openW('Monitor')">📊 Monitor</div>
+<div class="start-item" onclick="openW('Projects')">📁 Projects</div>
+<div class="start-item" onclick="openW('Analytics')">📊 Analytics</div>
 <div class="start-item" onclick="openW('Terminal')">💻 Terminal</div>
-<div class="start-item" onclick="openW('Settings')">⚙️ Settings</div>
 </div>
 
-<!-- TASKBAR -->
+<!-- TASKBAR (NOW FULLY FUNCTIONAL) -->
 <div id="taskbar">
+
 <div id="startBtn" onclick="toggleStart()">🪟</div>
 
-<div class="taskbtn" onclick="openW('Files')">📁 Files</div>
+<div class="taskbtn" onclick="openW('Projects')">📁 Files</div>
 <div class="taskbtn" onclick="openW('Terminal')">💻 Terminal</div>
-<div class="taskbtn" onclick="openW('Monitor')">📊 Monitor</div>
-<div class="taskbtn" onclick="openW('Settings')">⚙️ Settings</div>
+<div class="taskbtn" onclick="openW('Analytics')">📊 Monitor</div>
+<div class="taskbtn" onclick="show('skills',document.querySelectorAll('.nav')[2])">⚙️ Settings</div>
+
 </div>
 
 </div>
@@ -262,7 +275,8 @@ const projects=[
 {name:"Task Manager Clone",cat:"System",c:8.5},
 {name:"OCR Bot",cat:"Automation",c:9.2},
 {name:"Crosshair Tool",cat:"UI",c:6.5},
-{name:"Remote Viewer",cat:"Networking",c:8.8}
+{name:"Remote Viewer",cat:"Networking",c:8.8},
+{name:"Media Tool",cat:"Media",c:7.2}
 ];
 
 /* NAV */
@@ -274,75 +288,43 @@ if(el) el.classList.add("active");
 }
 
 /* CHARTS */
-new Chart(c1,{type:"doughnut",data:{labels:["System","Automation","Networking","UI"],datasets:[{data:[30,25,25,20]}]}});
-new Chart(c2,{type:"line",data:{labels:["P1","P2","P3","P4"],datasets:[{data:[20,40,70,100]}]}});
-new Chart(c3,{type:"bar",data:{labels:["1","2","3","4"],datasets:[{data:[20,50,80,100]}]}});
+new Chart(c1,{type:"doughnut",data:{labels:["System","Automation","Networking","Media","UI"],datasets:[{data:[30,25,20,15,10]}]}});
+new Chart(c2,{type:"line",data:{labels:["P1","P2","P3","P4","P5"],datasets:[{data:[20,40,65,85,100]}]}});
+new Chart(c3,{type:"bar",data:{labels:["Phase1","2","3","4","5"],datasets:[{data:[20,45,70,90,100]}]}});
 
 /* DB */
 document.getElementById("db").innerHTML=
-projects.map(p=>`<div>📌 ${p.name}</div>`).join("");
+projects.map(p=>`<div>📌 ${p.name} — ${p.cat} — Complexity ${p.c}</div>`).join("");
 
 /* WINDOW SYSTEM */
 function openW(t){
 document.getElementById("win").style.display="block";
 document.getElementById("wt").innerText=t;
 
-let c="";
+let content="";
+if(t==="Projects") content="📁 Projects System loaded...";
+if(t==="Analytics") content="📊 Analytics Engine active...";
+if(t==="Terminal") content="💻 Terminal ready...";
 
-/* FILES */
-if(t==="Files"){
-c=`
-📁 FILE SYSTEM<br>
-<div class="folder">📂 Documents</div>
-<div class="folder">📂 Projects</div>
-<div class="folder">📂 Builds</div>
-<div class="folder">📂 Users</div>
-`;
-}
-
-/* MONITOR */
-if(t==="Monitor"){
-c=`
-📊 MONITOR<br>
-CPU<div class="progress"><div style="width:80%"></div></div>
-RAM<div class="progress"><div style="width:60%"></div></div>
-GPU<div class="progress"><div style="width:90%"></div></div>
-AI<div class="progress"><div style="width:75%"></div></div>
-`;
-}
-
-/* TERMINAL */
-if(t==="Terminal"){
-c=`
-💻 DISK SYSTEM<br>
-<div class="folder">C:\\ System</div>
-<div class="folder">D:\\ Data</div>
-<div class="folder">E:\\ Backup</div>
-`;
-}
-
-/* SETTINGS */
-if(t==="Settings"){
-c=`
-⚙️ SETTINGS<br>
-<div class="folder">Performance</div>
-<div class="folder">UI Scale</div>
-<div class="folder">Network</div>
-<div class="folder">Developer Mode</div>
-`;
-}
-
-document.getElementById("wcontent").innerHTML=c;
+document.getElementById("wcontent").innerHTML=content;
 }
 
 function closeW(){
 document.getElementById("win").style.display="none";
 }
 
+/* START MENU */
 function toggleStart(){
 let m=document.getElementById("startMenu");
-m.style.display = m.style.display==="block"?"none":"block";
+m.style.display = (m.style.display==="block") ? "none" : "block";
 }
+
+/* CLOSE MENU OUTSIDE */
+document.addEventListener("click",function(e){
+if(!e.target.closest("#startBtn") && !e.target.closest("#startMenu")){
+document.getElementById("startMenu").style.display="none";
+}
+});
 
 </script>
 
