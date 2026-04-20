@@ -59,7 +59,7 @@ border-radius:12px;
 padding:15px;
 }
 
-/* OS WINDOW STYLE */
+/* WINDOW SYSTEM (ORIGINAL KEPT) */
 .window{
 position:absolute;
 width:400px;
@@ -69,6 +69,7 @@ border:1px solid rgba(255,255,255,0.1);
 border-radius:10px;
 display:none;
 backdrop-filter:blur(12px);
+z-index:50;
 }
 
 .bar{
@@ -89,7 +90,27 @@ outline:none;
 }
 
 /* ========================= */
-/* 🪟 WINDOWS 11 START MENU */
+/* DESKTOP ICONS (RESTORED) */
+/* ========================= */
+
+.icon{
+width:80px;
+text-align:center;
+cursor:pointer;
+padding:10px;
+border-radius:10px;
+display:inline-block;
+color:#cbd5e1;
+transition:0.2s;
+}
+
+.icon:hover{
+background:rgba(255,255,255,0.05);
+transform:scale(1.05);
+}
+
+/* ========================= */
+/* WINDOWS 11 START SYSTEM */
 /* ========================= */
 
 #taskbar{
@@ -104,12 +125,13 @@ align-items:center;
 padding:0 10px;
 gap:10px;
 border-top:1px solid rgba(255,255,255,0.08);
+z-index:100;
 }
 
-/* START BUTTON (Windows 11 style) */
+/* START BUTTON */
 #startBtn{
-width:38px;
-height:38px;
+width:40px;
+height:40px;
 border-radius:10px;
 display:flex;
 align-items:center;
@@ -130,19 +152,14 @@ transform:scale(1.05);
 position:absolute;
 bottom:60px;
 left:10px;
-width:260px;
+width:280px;
 background:rgba(20,25,40,0.75);
-backdrop-filter:blur(18px);
+backdrop-filter:blur(20px);
 border:1px solid rgba(255,255,255,0.1);
 border-radius:16px;
 padding:10px;
 display:none;
-animation:fadeIn .2s ease;
-}
-
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(10px);}
-to{opacity:1;transform:translateY(0);}
+z-index:200;
 }
 
 .start-item{
@@ -155,26 +172,6 @@ transition:0.2s;
 
 .start-item:hover{
 background:rgba(255,255,255,0.06);
-}
-
-/* WINDOW */
-.window{
-position:absolute;
-width:400px;
-height:260px;
-background:rgba(255,255,255,0.05);
-border:1px solid rgba(255,255,255,0.1);
-border-radius:10px;
-display:none;
-backdrop-filter:blur(12px);
-}
-
-.bar{
-background:rgba(99,102,241,0.3);
-padding:6px;
-display:flex;
-justify-content:space-between;
-cursor:default;
 }
 </style>
 </head>
@@ -236,23 +233,30 @@ AI/OCR ████████ 80%
 </div>
 </div>
 
-<!-- OS MODE -->
+<!-- OS MODE (UPDATED BUT ORIGINAL KEPT) -->
 <div id="os" class="page">
 
-<div class="card" style="height:500px;position:relative;overflow:hidden;">
+<div class="card" style="height:520px;position:relative;overflow:hidden;">
 
-<!-- WINDOW -->
+<!-- DESKTOP ICONS (RESTORED - IMPORTANT) -->
+<div style="padding:10px;">
+<div class="icon" onclick="openW('Projects')">📁<br>Projects</div>
+<div class="icon" onclick="openW('Analytics')">📊<br>Analytics</div>
+<div class="icon" onclick="openW('Terminal')">💻<br>Terminal</div>
+</div>
+
+<!-- ORIGINAL WINDOW (KEPT) -->
 <div class="window" id="win">
 <div class="bar">
 <span id="wt">Window</span>
 <span onclick="closeW()" style="cursor:pointer;">✖</span>
 </div>
-<div style="padding:10px;font-size:12px;">
+<div style="padding:10px;font-size:12px;" id="wcontent">
 Fake OS subsystem running inside analytics engine.
 </div>
 </div>
 
-<!-- START MENU -->
+<!-- WINDOWS 11 START MENU (NEW ADDITION) -->
 <div id="startMenu">
 
 <div class="start-item" onclick="openW('Projects')">📁 Projects</div>
@@ -261,13 +265,10 @@ Fake OS subsystem running inside analytics engine.
 
 </div>
 
-<!-- TASKBAR -->
+<!-- TASKBAR (UPDATED) -->
 <div id="taskbar">
 
-<!-- WINDOWS 11 STYLE START BUTTON -->
-<div id="startBtn" onclick="toggleStart()">
-🪟
-</div>
+<div id="startBtn" onclick="toggleStart()">🪟</div>
 
 📁 Files | 💻 Terminal | ⚙️ Settings
 
@@ -324,22 +325,40 @@ projects.map(p=>
 `<div>📌 ${p.name} — ${p.cat} — Complexity ${p.c}</div>`
 ).join("");
 
-/* OS */
+
+/* ORIGINAL OS FUNCTIONS (KEPT) */
 function openW(t){
 document.getElementById("win").style.display="block";
 document.getElementById("wt").innerText=t;
+
+let content="";
+
+if(t==="Projects"){
+content="📁 Projects System<br>- Task Manager Clone<br>- OCR Bot<br>- Remote Viewer<br>- Media Tools";
 }
+
+if(t==="Analytics"){
+content="📊 Analytics Engine Active<br>Maturity: 92%<br>Status: STABLE";
+}
+
+if(t==="Terminal"){
+content="💻 Terminal Ready<br>> type help";
+}
+
+document.getElementById("wcontent").innerHTML=content;
+}
+
 function closeW(){
 document.getElementById("win").style.display="none";
 }
 
-/* START MENU */
+/* WINDOWS 11 START MENU */
 function toggleStart(){
 let m=document.getElementById("startMenu");
 m.style.display = (m.style.display==="block") ? "none" : "block";
 }
 
-/* click outside closes start */
+/* CLOSE START WHEN CLICK OUTSIDE */
 document.addEventListener("click",function(e){
 if(!e.target.closest("#startBtn") && !e.target.closest("#startMenu")){
 document.getElementById("startMenu").style.display="none";
